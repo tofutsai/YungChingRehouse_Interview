@@ -1,0 +1,50 @@
+﻿@model YungChingRehouse_Interview.Models.member
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>登入</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control", @placeholder = "example@example.com" } })
+            @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.password, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.PasswordFor(model => model.password, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="checkbox" class="form-check-input" id="exampleCheck">
+            <label class="form-check-label text-muted" for="exampleCheck">Remember me</label>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="登入" class="form-control btn btn-primary" style="margin-bottom:10px;" /><br />
+            @Html.ActionLink("註冊點這裡", "Register", new { }, htmlAttributes: new { @style = "margin-right:10px;" })
+            @Html.ActionLink("忘記密碼?", "Login")
+        </div>
+
+    </div>
+</div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
