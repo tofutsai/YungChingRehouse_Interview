@@ -3,12 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using YungChingRehouse_Interview.Models;
+using YungChingRehouse_Interview.Services;
 
 namespace YungChingRehouse_Interview.Controllers
 {
     public class AccountController : Controller
     {
+        private IAccountService _accountService;
+
+        public AccountController(IAccountService accountService)
+        {
+            _accountService = accountService;
+        }
+
         /// <summary>
         /// 登入頁面
         /// </summary>
@@ -73,9 +82,20 @@ namespace YungChingRehouse_Interview.Controllers
             else
             {
                 
-                ViewBag.message = "註冊成功!";
+                 ViewBag.message = "註冊成功!";
                 return View();
             }
+        }
+        /// <summary>
+        /// 登出
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]//設定此Action須登入
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            Session.RemoveAll();
+            return RedirectToAction("Login", "Account");
         }
     }
 }
