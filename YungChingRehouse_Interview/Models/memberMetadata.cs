@@ -15,6 +15,7 @@ namespace YungChingRehouse_Interview.Models
             public int accountId { get; set; }
             [DisplayName("帳號")]
             [Required(ErrorMessage = "請輸入帳號email")]
+            [EmailAddress]
             public string email { get; set; }
             [DisplayName("密碼")]
             [Required(ErrorMessage = "請輸入密碼")]

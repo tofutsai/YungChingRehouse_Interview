@@ -81,8 +81,12 @@ namespace YungChingRehouse_Interview.Controllers
                 return RedirectToAction("Index", "Home");
             else
             {
-                
-                 ViewBag.message = "註冊成功!";
+                if (!ModelState.IsValid)
+                {
+                    return View(formData);
+                }
+                _accountService.CreateToDatabase(formData);
+                ViewBag.message = "註冊成功!";
                 return View();
             }
         }

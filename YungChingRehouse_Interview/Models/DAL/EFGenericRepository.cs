@@ -14,7 +14,7 @@ namespace YungChingRehouse_Interview.Models.DAL
     public class EFGenericRepository<TEntity> : IRepository<TEntity>
         where TEntity : class
     {
-        private YCReHouseInterviewEntities Context { get; set; }
+        private DbContext Context { get; set; }
 
         /// <summary>
         /// 建構EF一個Entity的Repository，需傳入此Entity的Context。
