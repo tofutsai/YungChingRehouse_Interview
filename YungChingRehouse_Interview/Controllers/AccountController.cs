@@ -44,13 +44,17 @@ namespace YungChingRehouse_Interview.Controllers
                 return RedirectToAction("Index", "Home");
             else
             {
-                if (!ModelState.IsValid)
+                bool isSuccess = _accountService.ValidateUser(formData);
+                if (isSuccess)
                 {
-                    return View(formData);
+                    HttpCookie cookie = _accountService.GenCookie(formData.email);
+                    Response.Cookies.Add(cookie);
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
-                    return View();
+                    ViewData["message"] = "帳號或密碼錯誤!";
+                    return View(formData);
                 }
             }
 
@@ -85,8 +89,16 @@ namespace YungChingRehouse_Interview.Controllers
                 {
                     return View(formData);
                 }
-                _accountService.CreateToDatabase(formData);
-                ViewBag.message = "註冊成功!";
+                bool isSucess = _accountService.CreateToDatabase(formData);
+                if (isSucess)
+                {
+                    ViewData["message"] = "註冊成功!";
+                }
+                else
+                {
+                    ViewData["message"] = "此帳號已申請過!";
+                }
+                
                 return View();
             }
         }

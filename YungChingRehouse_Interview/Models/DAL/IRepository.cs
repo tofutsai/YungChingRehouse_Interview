@@ -13,7 +13,7 @@ namespace YungChingRehouse_Interview.Models.DAL
     /// <typeparam name="T">任意model的class</typeparam>
     public interface IRepository<T>
     {
-        // <summary>
+        /// <summary>
         /// 新增一筆資料。
         /// </summary>
         /// <param name="entity">要新增到的Entity</param>

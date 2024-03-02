@@ -10,7 +10,11 @@ namespace YungChingRehouse_Interview.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            //判斷使用者是否已經過登入驗證
+            if (User?.Identity?.IsAuthenticated == true)
+                return View();
+            else
+                return RedirectToAction("Login", "Account");
         }
 
     }
