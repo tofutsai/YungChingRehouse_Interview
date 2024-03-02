@@ -8,6 +8,7 @@ namespace YungChingRehouse_Interview.Models
 
     public class UserInfo
     {
+        public int operId { get; set; }
         public string operEmail { get; set; }
         public string operName { get; set; }
         public bool operIsAdmin { get; set; }

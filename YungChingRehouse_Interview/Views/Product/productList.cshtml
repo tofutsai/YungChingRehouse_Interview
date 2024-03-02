@@ -1,0 +1,70 @@
+﻿@model YungChingRehouse_Interview.ViewModels.ProductViewModel
+@{
+    ViewBag.Title = "產品列表";
+}
+
+<h2>產品清單</h2>
+
+<p>
+    @Html.ActionLink("新增產品", "createProduct", "Product", new { }, new { @class = "btn btn-primary " })
+</p>
+@using (Html.BeginForm("productRead", "Product"))
+{
+    <span>查詢條件 : </span>
+    @Html.TextBoxFor(x => x.formSearch.productName, new { placeholder = "產品名稱", style = "width:120px;" })
+    <span>&ensp;</span>
+    @Html.DropDownListFor(x => x.formSearch.price, new List<SelectListItem>()
+        {
+           new SelectListItem{Text="價格>=10000", Value="10000"},
+           new SelectListItem{Text="不限價格", Value="0"}
+        })
+    <input type="submit" value="查詢" class="btn btn-success" />
+}
+<br />
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.product.productName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.product.price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.product.amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.product.createdDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.product.updatedDate)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.products)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.productName)
+                <div><img src="@item.fImagePath" style="width:80px; height:60px" /></div>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.createdDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.updatedDate)
+            </td>
+            <td>
+                @Html.ActionLink("編輯", "Edit", new { productId = item.productId }, new { @class = "btn btn-primary" }) |
+                <button onclick="Delete(@item.productId, '@item.productName')" class="btn btn-danger">刪除</button> 
+            </td>
+        </tr>
+    }
+
+</table>
