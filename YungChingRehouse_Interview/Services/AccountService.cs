@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,15 +13,17 @@ namespace YungChingRehouse_Interview.Services
     {
         private IRepository<member> _repository;
         private IEncryptService _encryptService;
+        private ICommonService _commonService;
 
         //public AccountService() : this(new EFGenericRepository<member>(new YCReHouseInterviewEntities()))
         //{
 
         //}
-        public AccountService(IRepository<member> repository, IEncryptService encryptService)
+        public AccountService(IRepository<member> repository, IEncryptService encryptService, ICommonService commonService)
         {
             _repository = repository;
             _encryptService = encryptService;
+            _commonService = commonService;
         }
 
         public class UserToken
@@ -28,6 +31,7 @@ namespace YungChingRehouse_Interview.Services
             public string PasswordHash { get; set; }
             public string PasswordSalt { get; set; }
         }
+       
 
         /// <summary>
         /// 將會員資料寫入Database
@@ -96,13 +100,21 @@ namespace YungChingRehouse_Interview.Services
         /// <returns></returns>
         public HttpCookie GenCookie(string email)
         {
+            member member = _repository.Read(x => x.email == email);
+            var payload = new UserInfo
+            {
+                operEmail = member.email,
+                operName = member.name,
+                operIsAdmin = member.isAdmin
+            };
+            string payloadJson = _commonService.GetJsonString(payload);
             var ticket = new FormsAuthenticationTicket(
                 version: 1,
-                name: email, //可以放使用者Id
+                name: member.email, //可以放使用者Id
                 issueDate: DateTime.UtcNow,//現在UTC時間
                 expiration: DateTime.UtcNow.AddMinutes(30),//Cookie有效時間=現在時間往後+30分鐘
                 isPersistent: true,// 是否要記住我 true or false
-                userData: "", //可以放使用者角色名稱
+                userData: payloadJson, //可以放使用者角色名稱
                 cookiePath: FormsAuthentication.FormsCookiePath
             );
 
