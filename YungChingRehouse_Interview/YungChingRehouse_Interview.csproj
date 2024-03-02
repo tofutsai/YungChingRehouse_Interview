@@ -201,6 +201,9 @@
     <Compile Include="Services\IAccountService.cs" />
     <Compile Include="Services\ICommonService.cs" />
     <Compile Include="Services\IEncryptService.cs" />
+    <Compile Include="Services\IProductService.cs" />
+    <Compile Include="Services\ProductService.cs" />
+    <Compile Include="ViewModels\ProductViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\YCReHouseInterview.mdf" />
@@ -259,11 +262,12 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Product\productList.cshtml" />
+    <Content Include="Views\Product\createProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ViewModels\" />
+    <Folder Include="Content\images\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\Product\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
