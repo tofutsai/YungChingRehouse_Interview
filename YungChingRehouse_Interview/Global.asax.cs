@@ -25,6 +25,7 @@ namespace YungChingRehouse_Interview
             builder.RegisterControllers(typeof(HomeController).Assembly);
             // 註冊Service
             builder.RegisterType<AccountService>().As<IAccountService>();
+            builder.RegisterType<EncryptService>().As<IEncryptService>();
             //註冊泛型Repository
             //builder.RegisterGeneric(typeof(EFGenericRepository<>)).As(typeof(IRepository<>));
             builder.RegisterGeneric(typeof(EFGenericRepository<>)).As(typeof(IRepository<>)).WithParameter(

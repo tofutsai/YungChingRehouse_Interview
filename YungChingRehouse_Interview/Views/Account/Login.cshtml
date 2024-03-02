@@ -47,4 +47,16 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+<script type="text/javascript">
+    var message = '@ViewData["message"]';
+    var errMessage = '@ViewData["errorMsg"]';
+    if (message) {
+        alert(message);
+        //window.location.href = "@Url.Action("Login", "Account")";
+    }
+    if (errMessage)
+    {
+        alert(errMessage);
+    }
+</script>
 }
