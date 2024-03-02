@@ -21,5 +21,6 @@ namespace YungChingRehouse_Interview.Models
         public bool isAdmin { get; set; }
         public System.DateTime createdDate { get; set; }
         public Nullable<System.DateTime> updatedDate { get; set; }
+        public string passwordSalt { get; set; }
     }
 }

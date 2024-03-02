@@ -15,6 +15,7 @@ namespace YungChingRehouse_Interview.Filters
     {
         public void OnException(ExceptionContext filterContext)
         {
+            string action = filterContext.RouteData.Values["action"].ToString();
             var ex = filterContext.Exception;
             string errMessage = null;
             if (ex == null)
@@ -39,12 +40,10 @@ namespace YungChingRehouse_Interview.Filters
             //錯誤內容寫入errorLog
             File.AppendAllText(root + DateTime.Now.ToString("yyyy-MM-dd") + ".txt", errMessage);
 
-            //var err = new { Message = "系統忙線中，請稍後再試。", Code = 500 };
-            //string json = JsonConvert.SerializeObject(err);
             //回傳狀態碼及內容
             filterContext.Result = new ViewResult
             {
-                ViewName = "Error",
+                ViewName = action,
                 ViewData = new ViewDataDictionary()
                 {
                     {"errorMsg", "系統忙線中，請稍後再試。"}
