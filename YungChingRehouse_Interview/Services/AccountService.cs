@@ -103,6 +103,7 @@ namespace YungChingRehouse_Interview.Services
             member member = _repository.Read(x => x.email == email);
             var payload = new UserInfo
             {
+                operId = member.accountId,
                 operEmail = member.email,
                 operName = member.name,
                 operIsAdmin = member.isAdmin

@@ -21,7 +21,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav mr-auto">
                     <li class="nav-item active">@Html.ActionLink("首頁", "Index", "Home", null, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("產品一覽表", "Index", "Product", null, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("產品一覽表", "productList", "Product", null, new { @class = "nav-link" })</li>
                 </ul>
                 <ul class="navbar-nav">
                     @if (User?.Identity?.IsAuthenticated == true)
