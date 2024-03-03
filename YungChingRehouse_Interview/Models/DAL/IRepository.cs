@@ -27,16 +27,24 @@ namespace YungChingRehouse_Interview.Models.DAL
         T Read(Expression<Func<T, bool>> predicate);
 
         /// <summary>
-        /// 取得Entity全部筆數的IQueryable。
+        /// 取得該用戶Entity全部筆數的IQueryable。
         /// </summary>
-        /// <returns>Entity全部筆數的IQueryable。</returns>
-        IQueryable<T> Reads();
+        /// <param name="predicate">要取得的Where條件。</param>
+        /// <returns>該用戶Entity全部筆數的IQueryable。</returns>
+        IQueryable<T> Reads(Expression<Func<T, bool>> predicate);
 
         /// <summary>
         /// 更新一筆資料的內容。
         /// </summary>
         /// <param name="entity">要更新的內容</param>
         void Update(T entity);
+
+        /// <summary>
+        /// 更新一筆Entity的內容。只更新有指定的Property。
+        /// </summary>
+        /// <param name="entity">要更新的內容。</param>
+        /// <param name="updateProperties">需要更新的欄位。</param>
+        void Update(T entity, Expression<Func<T, object>>[] updateProperties);
 
         /// <summary>
         /// 刪除一筆資料內容。
@@ -47,6 +55,6 @@ namespace YungChingRehouse_Interview.Models.DAL
         /// <summary>
         /// 儲存異動。
         /// </summary>
-        void SaveChanges();
+        int SaveChanges();
     }
 }

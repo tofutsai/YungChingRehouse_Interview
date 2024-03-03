@@ -47,8 +47,10 @@ namespace YungChingRehouse_Interview.Services
                 mem.passwordSalt = token.PasswordSalt;
                 mem.createdDate = DateTime.Now;
                 _repository.Create(mem);
-                _repository.SaveChanges();
-                isSucess = true;
+                if (_repository.SaveChanges() != 0)
+                {
+                    isSucess = true;
+                };
             }
 
             return isSucess;
