@@ -30,6 +30,7 @@ namespace YungChingRehouse_Interview.ViewModels
 
     public class productView
     {
+        public int productId { get; set; }
         [DisplayName("產品名稱")]
         [Required(ErrorMessage = "請輸入產品名稱")]
         public string productName { get; set; }

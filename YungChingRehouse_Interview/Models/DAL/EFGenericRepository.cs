@@ -16,11 +16,11 @@ namespace YungChingRehouse_Interview.Models.DAL
     {
         private DbContext Context { get; set; }
 
-        /// <summary>
-        /// 建構EF一個Entity的Repository，需傳入此Entity的Context。
-        /// </summary>
-        /// <param name="inContext">Entity所在的Context</param>
-        public EFGenericRepository(YCReHouseInterviewEntities inContext)
+        ///// <summary>
+        ///// 建構EF一個Entity的Repository，需傳入此Entity的Context。
+        ///// </summary>
+        ///// <param name="inContext">Entity所在的Context</param>
+        public EFGenericRepository(DbContext inContext)
         {
             Context = inContext;
         }
@@ -47,10 +47,11 @@ namespace YungChingRehouse_Interview.Models.DAL
         /// <summary>
         /// 取得Entity全部筆數的IQueryable。
         /// </summary>
+        /// <param name="predicate">要取得的Where條件。</param>
         /// <returns>Entity全部筆數的IQueryable。</returns>
-        public IQueryable<TEntity> Reads()
+        public IQueryable<TEntity> Reads(Expression<Func<TEntity, bool>> predicate)
         {
-            return Context.Set<TEntity>().AsQueryable();
+            return Context.Set<TEntity>().Where(predicate).AsQueryable();
         }
 
         /// <summary>
@@ -94,15 +95,16 @@ namespace YungChingRehouse_Interview.Models.DAL
         /// <summary>
         /// 儲存異動。
         /// </summary>
-        public void SaveChanges()
+        public int SaveChanges()
         {
-            Context.SaveChanges();
+            int number = Context.SaveChanges();
 
             // 因為Update 單一model需要先關掉validation，因此重新打開
             if (Context.Configuration.ValidateOnSaveEnabled == false)
             {
                 Context.Configuration.ValidateOnSaveEnabled = true;
             }
+            return number;
         }
     }
 }
