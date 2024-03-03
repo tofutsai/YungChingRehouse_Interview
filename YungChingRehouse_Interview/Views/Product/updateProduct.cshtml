@@ -1,0 +1,90 @@
+﻿@model YungChingRehouse_Interview.ViewModels.productView
+@{
+    ViewBag.Title = "updateProduct";
+}
+
+<h2>產品修改</h2>
+
+
+@using (Html.BeginForm("updateProduct", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.productId)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.productName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.productName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.productName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.price, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.price, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.price, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.amount, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.amount, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.amount, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.archived, htmlAttributes: new { @class = "control-label col-md-2 required" })
+        <div class="col-md-10">
+            @Html.RadioButtonFor(model => model.archived, true, Model.archived == true ? (object)new { @checked = "checked" } : null)
+            <span>顯示</span>
+            @Html.RadioButtonFor(model => model.archived, false, Model.archived == false ? (object)new { @checked = "checked" } : null)
+            <span>隱藏</span>
+            @Html.ValidationMessageFor(model => model.archived, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">產品照片</label>
+        <div class="col-md-10">
+            <img src="@Url.Content("~/Content/images/" + Model.fImagePath)" style="width:80px; height:60px" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">變更照片</label>
+        <div class="col-md-10">
+            <input type="file" name="Image" class="form-control" accept=".png,.jpeg,.jpg" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="修改" class="btn btn-success" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("產品清單", "productList", "Product", new { }, new { @class = "btn btn-primary " })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+<script type="text/javascript">
+    var message = '@ViewData["message"]';
+    var errMessage = '@ViewData["errorMsg"]';
+    if (message) {
+        alert(message);
+        window.location.href = "@Url.Action("productList", "Product")";
+    }
+    if (errMessage)
+    {
+        alert(errMessage);
+    }
+</script>
+}
+

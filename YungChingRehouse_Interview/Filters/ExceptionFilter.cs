@@ -17,7 +17,7 @@ namespace YungChingRehouse_Interview.Filters
         {
             string action = filterContext.RouteData.Values["action"].ToString();
             var ex = filterContext.Exception;
-            string errMessage = null;
+            string errMessage = string.Empty;
             if (ex == null)
             {
                 return;

@@ -8,7 +8,7 @@
 <p>
     @Html.ActionLink("新增產品", "createProduct", "Product", new { }, new { @class = "btn btn-primary " })
 </p>
-@using (Html.BeginForm("productRead", "Product"))
+@using (Html.BeginForm("productList", "Product"))
 {
     <span>查詢條件 : </span>
     @Html.TextBoxFor(x => x.formSearch.productName, new { placeholder = "產品名稱", style = "width:120px;" })
@@ -33,6 +33,9 @@
             @Html.DisplayNameFor(model => model.product.amount)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.product.archived)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.product.createdDate)
         </th>
         <th>
@@ -46,7 +49,7 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.productName)
-                <div><img src="@item.fImagePath" style="width:80px; height:60px" /></div>
+                <div><img src="@Url.Content("~/Content/images/" + item.fImagePath)" style="width:80px; height:60px" /></div>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.price)
@@ -55,16 +58,48 @@
                 @Html.DisplayFor(modelItem => item.amount)
             </td>
             <td>
+                @if ((bool)item.archived)
+                {
+                    <span>顯示</span>
+                }
+                else
+                {
+                    <span>隱藏</span>
+                }
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.createdDate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.updatedDate)
             </td>
             <td>
-                @Html.ActionLink("編輯", "Edit", new { productId = item.productId }, new { @class = "btn btn-primary" }) |
-                <button onclick="Delete(@item.productId, '@item.productName')" class="btn btn-danger">刪除</button> 
+                @Html.ActionLink("編輯", "updateProduct", new { productId = item.productId }, new { @class = "btn btn-primary" }) |
+                <button onclick="Delete(@item.productId, '@item.productName')" class="btn btn-danger">刪除</button>
             </td>
         </tr>
     }
 
 </table>
+<script>
+    function Delete(id, productName) {
+        var yes = confirm("確定刪除商品:  " + productName + " 嗎?");
+        if (yes) {
+            var data = { productId: id };
+            $.ajax({
+                type: "post",
+                url: "@Url.Action("deleteProduct")",
+                data: data,
+                dataType: "text",
+                success: function (msg) {
+                    alert("回傳訊息: " + msg);
+                    location.reload();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status);
+                    alert(thrownError);
+                }
+            })
+        }
+    }
+</script>
